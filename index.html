@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Scroll App</title>
+    <style>
+        /* styles for grid container */
+        .grid-container {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          gap: 10px;
+          position: relative;
+        }
+      
+        .grid-item {
+          overflow: hidden;
+        }
+        /* styles for collapsible button */
+        .collapsible {
+          background-color: #777;
+          color: white;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+        }
+        /* styles for active button and hover effect */
+        .collapsible:hover {
+          background-color: #555;
+        }
+      
+        /* styles for plus/minus sign */
+        .collapsible:after {
+          content: '+';
+          /* default content */
+          font-size: 13px;
+          color: white;
+          float: right;
+          margin-left: 5px;
+        }
+      
+        .collapsible.active:after {
+          content: "-";
+        }
+      
+        /* styles for collapsible content */
+        .content {
+          width: 100%;
+          padding: 0 18px;
+          overflow: hidden;
+          background-color: #f1f1f1;
+          display: none;
+        }
+        /* styles for collapsible content */
+        .content.active {
+          display: block;
+        }
+      </style>
+</head>
+<body>
+    <div class="grid-container" id="grid-ele">
+    </div>
+    <script>
+        function getImages() {
+            fetch('https://dog.ceo/api/breeds/image/random').then(async(response) =>{
+                const data = await response.json();
+                //logic to append data to html element
+                const ele = `<div class="grid-item"><img height="250" width="250" src="${data.message}" alt=""/></div>`;
+                const divEle = document.getElementById("grid-ele");
+                divEle.insertAdjacentHTML('beforeend', ele);
+                return getImages();
+            }).catch((err) => {
+                alert(err);
+            });
+        }
+        getImages();
+    </script>    
+</body>
+</html>
